@@ -42,7 +42,7 @@ int main(){
     }
     while(1){
         memset(buffer,0,BUFFER_SIZE);
-        printf("Enter the message:");
+        printf("Enter the message (To exit write: STOP):");
         fgets(buffer,BUFFER_SIZE,stdin);
         if(strncmp(buffer,"STOP",4)==0){
             send(newfd,buffer,strlen(buffer),0);
