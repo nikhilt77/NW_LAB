@@ -31,3 +31,10 @@ int main(){
     printf("Server:%s\n",answer);
     close(sockfd);
 }
+
+/* output
+./cli
+Enter the number:24
+Sent to Client
+Server:Two Four
+*/
