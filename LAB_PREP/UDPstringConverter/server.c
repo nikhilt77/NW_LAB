@@ -49,3 +49,7 @@ int main(){
     }
     close(sockfd);
 }
+/* output
+./ser
+Client:24
+*/
