@@ -9,6 +9,22 @@
 
 #define BUFFER_SIZE 1024
 
+int isPalindrome(char* word){
+    if(strlen(word)==1){
+        return 1;
+    }
+    int start=0,end=strlen(word)-1;
+    int isPali=1;
+    while(start<=end){
+        if(word[start]!=word[end]){
+            isPali=0;
+            return 0;
+        }
+        start++;
+        end--;
+    }
+    return 1;
+}
 int main(){
     int sockfd,newfd;
     socklen_t len;
@@ -47,7 +63,10 @@ int main(){
     printf("Filename:%s\n",filename);
 
     FILE* fr=fopen("copy.txt","w");
+    FILE* fp=fopen("pali.txt","w");
     FILE* f=fopen(filename,"r");
+    char* words[BUFFER_SIZE];
+    int wordcount=0;
     if(f==NULL){
         perror("Failed to open file\n");
         sprintf(buffer,"Failed to open file:%s\n",filename);
@@ -55,11 +74,23 @@ int main(){
         memset(buffer,0,BUFFER_SIZE);
         exit(0);
     }
+
     else{
         while(fgets(file,BUFFER_SIZE,f)!=NULL){
             send(newfd,file,strlen(file),0);
             fputs(file,fr);
             printf("%s",file);
+
+            char* tokens=strtok(file," \t\n");
+            while(tokens!=NULL){
+                if(isPalindrome(tokens)){
+                    words[wordcount++]=tokens;
+                }
+                tokens=strtok(NULL," \t\n");
+            }
+            for(int i=0;i<wordcount;i++){
+                fprintf(fp,"%s\t",words[i]);
+            }
             memset(file,0,BUFFER_SIZE);
         }
     }
